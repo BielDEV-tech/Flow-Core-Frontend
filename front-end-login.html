@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Flow Core</title>
+
+    <link rel="stylesheet" href="login.css">
+
+</head>
+
+<body>
+
+    <div class="login">
+
+        <div class="card-login">
+
+            <h1>Flow Core</h1>
+
+            <h2>Entrar</h2>
+
+            <input
+                type="text"
+                id="cpf"
+                placeholder="Digite seu CPF"
+            >
+
+            <input
+                type="password"
+                id="senha"
+                placeholder="Digite sua senha"
+            >
+
+            <button onclick="login()">
+                Entrar
+            </button>
+
+            <p id="mensagem"></p>
+
+            <p>
+                Ainda não possui uma conta?
+            </p>
+
+            <button onclick="irParaCadastro()">
+                Criar conta
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>
+

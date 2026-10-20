@@ -1,0 +1,1015 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #F1F5F9;
+    color: #0F172A;
+
+    overflow-x: hidden;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+
+/* =========================
+   MODO DARK
+========================= */
+
+body.dark {
+    background: #020617;
+    color: #F8FAFC;
+}
+
+body.dark .cards,
+body.dark .demos,
+body.dark .avaliacao,
+body.dark .suporte-card,
+body.dark .card {
+    background: #0F172A;
+    border-color: #334155;
+}
+
+body.dark .cards > h1,
+body.dark .demos h1,
+body.dark .avaliacao h1,
+body.dark .suporte > h1,
+body.dark .card h1,
+body.dark .card h2,
+body.dark .card h3,
+body.dark .suporte-card h2 {
+    color: #F8FAFC;
+}
+
+body.dark .cards > h2,
+body.dark .demos h2,
+body.dark .subtitulo-avaliacao,
+body.dark .nova-avaliacao p,
+body.dark .suporte > h2,
+body.dark .suporte-card p {
+    color: #CBD5E1;
+}
+
+body.dark .produtos-area,
+body.dark .suporte {
+    background: #020617;
+}
+
+
+/* =========================
+   ANIMAÇÕES
+========================= */
+
+@keyframes aparecer {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes deslizar {
+
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes brilho {
+
+    0% {
+        box-shadow: 0 0 0 rgba(249, 115, 22, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);
+    }
+
+    100% {
+        box-shadow: 0 0 0 rgba(249, 115, 22, 0);
+    }
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 22px 5%;
+
+    background: #0F172A;
+}
+
+.informacao {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 28px;
+
+    width: 100%;
+}
+
+.informacao a {
+    color: white;
+
+    text-decoration: none;
+
+    padding: 14px 22px;
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+}
+
+.informacao a:hover {
+    background: rgba(249, 115, 22, 0.15);
+
+    color: #F97316;
+
+    transform: translateY(-3px);
+}
+
+.informacao h4 {
+    font-size: 19px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================
+   BOTÃO DARK
+========================= */
+
+#modoDark {
+    width: 52px;
+    height: 52px;
+
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+#modoDark:hover {
+    transform: rotate(15deg) scale(1.08);
+
+    background: rgba(249, 115, 22, 0.2);
+}
+
+
+/* =========================
+   COMEÇO
+========================= */
+
+.comeco {
+    width: 100%;
+
+    min-height: 700px;
+
+    padding: 80px 6%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 80px;
+
+    text-align: center;
+
+    animation: aparecer 0.8s ease;
+}
+
+.comeco h1 {
+    font-size: clamp(60px, 6vw, 95px);
+
+    line-height: 1.08;
+
+    font-weight: 900;
+
+    letter-spacing: -2px;
+}
+
+.flow {
+    color: #F97316;
+}
+
+.core {
+    color: #8B5CF6;
+}
+
+.futuro {
+    color: #3B82F6;
+
+    font-weight: 900;
+}
+
+.presente {
+    color: #F59E0B;
+
+    font-weight: 900;
+}
+
+
+/* =========================
+   IMAGEM
+========================= */
+
+.foto {
+    width: min(650px, 50vw);
+
+    height: auto;
+
+    border-radius: 20px;
+
+    display: block;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.foto:hover {
+    transform: scale(1.02);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================
+   ÁREA DOS PRODUTOS
+========================= */
+
+.produtos-area {
+    width: 100%;
+
+    padding: 110px 5%;
+
+    background: #F1F5F9;
+
+    transition:
+        background 0.3s ease;
+}
+
+.produtos-conteudo {
+    width: 100%;
+
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: 1.2fr 1fr;
+
+    align-items: center;
+
+    gap: 60px;
+}
+
+
+/* =========================
+   PRODUTOS
+========================= */
+
+.cards {
+    width: 100%;
+
+    padding: 30px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 30px;
+
+    text-align: center;
+}
+
+.cards > h1 {
+    width: 100%;
+
+    font-size: clamp(45px, 5vw, 70px);
+
+    font-weight: 900;
+
+    line-height: 1.1;
+
+    color: #0F172A;
+}
+
+.cards > h2 {
+    width: 100%;
+
+    color: #475569;
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+    margin-top: -10px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   CARDS DOS PRODUTOS
+========================= */
+
+.card {
+    width: 390px;
+
+    min-height: 320px;
+
+    padding: 38px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 22px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #E5E7EB;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.10);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease,
+        border 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 22px 50px rgba(0, 0, 0, 0.16);
+}
+
+.card h1,
+.card h2,
+.card h3 {
+    color: #0F172A;
+
+    margin-bottom: 15px;
+}
+
+.card p {
+    color: #475569;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   VÍDEO
+========================= */
+
+.demos {
+    width: 100%;
+
+    padding: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background: #FFFFFF;
+
+    border: 1px solid #E5E7EB;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.08);
+
+    transition:
+        background 0.3s ease,
+        border 0.3s ease;
+}
+
+.demos h1 {
+    font-size: clamp(35px, 4vw, 55px);
+
+    font-weight: 900;
+
+    line-height: 1.1;
+
+    margin-bottom: 18px;
+
+    color: #0F172A;
+}
+
+.demos h2 {
+    color: #475569;
+
+    font-size: 21px;
+
+    font-weight: 600;
+
+    margin-bottom: 35px;
+}
+
+.video-container {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.video-demo {
+    width: 100%;
+
+    max-width: 650px;
+
+    height: auto;
+
+    display: block;
+
+    border-radius: 18px;
+
+    background: #020617;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================
+   AVALIAÇÕES
+========================= */
+
+.avaliacao {
+    width: 100%;
+
+    padding: 110px 5%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background: white;
+}
+
+.avaliacao > .card {
+    width: min(850px, 95vw);
+
+    margin: 30px auto 0;
+
+    text-align: center;
+}
+
+.avaliacao h1 {
+    font-size: clamp(45px, 5vw, 70px);
+
+    font-weight: 900;
+
+    line-height: 1.1;
+
+    margin-bottom: 18px;
+
+    color: #0F172A;
+}
+
+.subtitulo-avaliacao {
+    color: #475569;
+
+    font-size: 20px;
+
+    font-weight: 500;
+
+    line-height: 1.6;
+
+    margin-bottom: 35px;
+}
+
+#listaAvaliacoes {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.nova-avaliacao {
+    margin-top: 30px;
+
+    padding-top: 30px;
+
+    border-top: 1px solid #E5E7EB;
+}
+
+.nova-avaliacao h2 {
+    margin-bottom: 12px;
+
+    font-size: 27px;
+
+    font-weight: 800;
+}
+
+.nova-avaliacao p {
+    color: #475569;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================
+   BOTÃO
+========================= */
+
+button {
+    padding: 16px 28px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #F97316;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+
+    background: #EA580C;
+}
+
+
+/* =========================
+   SUPORTE
+========================= */
+
+.suporte {
+    width: 100%;
+
+    padding: 110px 5%;
+
+    text-align: center;
+}
+
+.suporte > h1 {
+    font-size: clamp(45px, 5vw, 70px);
+
+    font-weight: 900;
+
+    line-height: 1.1;
+
+    margin-bottom: 15px;
+
+    color: #0F172A;
+}
+
+.suporte > h2 {
+    color: #475569;
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+    margin-bottom: 50px;
+}
+
+.suporte-conteudo {
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    gap: 30px;
+}
+
+.suporte-card {
+    flex: 1;
+
+    padding: 38px 28px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    border: 1px solid #E5E7EB;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.07);
+
+    transition: 0.3s;
+}
+
+.suporte-card:hover {
+    transform: translateY(-6px);
+}
+
+.suporte-card h2 {
+    margin-bottom: 16px;
+
+    font-size: 27px;
+
+    font-weight: 800;
+}
+
+.suporte-card p {
+    color: #475569;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.rodape {
+    width: 100%;
+
+    padding: 110px 5% 70px;
+
+    background: #0F172A;
+
+    color: white;
+
+    text-align: center;
+}
+
+.rodape h1 {
+    font-size: clamp(48px, 5vw, 75px);
+
+    font-weight: 900;
+
+    line-height: 1.1;
+
+    margin-bottom: 18px;
+}
+
+.rodape h2 {
+    color: #CBD5E1;
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+    margin-bottom: 60px;
+}
+
+
+/* =========================
+   REDES SOCIAIS
+========================= */
+
+.redes-sociais {
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 25px;
+}
+
+.redes-sociais a {
+    min-height: 190px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    text-decoration: none;
+
+    color: white;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 22px;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        border 0.3s ease;
+}
+
+.redes-sociais a:hover {
+    transform: translateY(-8px);
+
+    background: rgba(249, 115, 22, 0.12);
+
+    border-color: #F97316;
+}
+
+.rede-icone {
+    font-size: 65px;
+
+    line-height: 1;
+}
+
+.redes-sociais a > span:last-child {
+    font-size: 22px;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   NOTEBOOK
+========================= */
+
+@media (max-width: 1100px) {
+
+    .informacao {
+        gap: 15px;
+    }
+
+    .informacao h4 {
+        font-size: 17px;
+    }
+
+    .comeco {
+        gap: 40px;
+    }
+
+    .foto {
+        width: min(600px, 50vw);
+    }
+
+    .produtos-conteudo {
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+    }
+
+    .redes-sociais {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .informacao {
+        flex-wrap: wrap;
+    }
+
+    .comeco {
+        flex-direction: column;
+
+        padding: 80px 5%;
+    }
+
+    .comeco h1 {
+        font-size: 70px;
+    }
+
+    .foto {
+        width: min(700px, 90vw);
+    }
+
+    .card {
+        width: min(500px, 90vw);
+    }
+
+    .suporte-conteudo {
+        flex-direction: column;
+    }
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 600px) {
+
+    .informacao {
+        flex-wrap: wrap;
+
+        gap: 5px;
+    }
+
+    .informacao a {
+        padding: 10px 8px;
+    }
+
+    .informacao h4 {
+        font-size: 14px;
+    }
+
+    .comeco {
+        padding: 70px 5%;
+    }
+
+    .comeco h1 {
+        font-size: 52px;
+
+        letter-spacing: -1px;
+    }
+
+    .foto {
+        width: 95vw;
+    }
+
+    .produtos-area {
+        padding: 80px 5%;
+    }
+
+    .cards {
+        padding: 10px 0;
+    }
+
+    .cards > h1 {
+        font-size: 43px;
+    }
+
+    .cards > h2 {
+        font-size: 20px;
+    }
+
+    .card {
+        width: 95vw;
+
+        min-height: 280px;
+
+        padding: 28px;
+    }
+
+    .demos {
+        padding: 25px 18px;
+    }
+
+    .demos h1 {
+        font-size: 35px;
+    }
+
+    .demos h2 {
+        font-size: 18px;
+    }
+
+    .video-demo {
+        width: 100%;
+    }
+
+    .demos,
+    .cards,
+    .avaliacao,
+    .suporte {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .avaliacao h1,
+    .suporte > h1 {
+        font-size: 43px;
+    }
+
+    .subtitulo-avaliacao {
+        font-size: 17px;
+    }
+
+    .redes-sociais {
+        grid-template-columns: 1fr;
+    }
+
+    .redes-sociais a {
+        min-height: 175px;
+    }
+
+    #modoDark {
+        width: 46px;
+        height: 46px;
+
+        font-size: 21px;
+    }
+}
+
+.produtos-conteudo {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    align-items: center;
+    gap: 60px;
+}
