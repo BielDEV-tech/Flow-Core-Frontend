@@ -25,16 +25,19 @@ function fecharErro() {
 
 
 async function login() {
-    const cpf = document.querySelector("#cpf").value.trim();
-    const senha = document.querySelector("#senha").value;
-    const mensagem = document.querySelector("#mensagem");
-
-    mensagem.textContent = "";
+    const cpfInput = document.querySelector("#cpf");
+    const senhaInput = document.querySelector("#senha");
+    const botao = document.querySelector(".card-login button");
+    const cpf = cpfInput.value.trim();
+    const senha = senhaInput.value;
 
     if (!cpf || !senha) {
         mostrarErro("Preencha o CPF e a senha para continuar.");
         return;
     }
+
+    botao.disabled = true;
+    botao.textContent = "Entrando...";
 
     try {
         const resposta = await fetch(
@@ -56,38 +59,35 @@ async function login() {
         const dados = await resposta.json();
 
         if (!resposta.ok) {
+            console.error("Erro retornado pela API:", dados);
+
             mostrarErro(
                 resposta.status === 401
-                    ? "CPF ou senha inválidos. Confira seus dados e tente novamente."
-                    : (dados.detail || "Não foi possível realizar o login.")
+                    ? "CPF ou senha inválidos."
+                    : dados.detail || "Erro ao realizar login."
             );
             return;
         }
 
-        const token =
-            dados["chave de acesso"] ??
-            dados.access_token;
+        const token = dados.access_token;
 
         if (!token) {
-            mostrarErro("O servidor não retornou o token de acesso.");
+            mostrarErro("A API não retornou o token de acesso.");
             return;
         }
 
-        // Salvar token de autenticação
         localStorage.setItem("token", token);
 
-        // Retornar automaticamente para o site
         window.location.href = "./index.html";
 
     } catch (erro) {
         console.error("Erro no login:", erro);
-
-        mostrarErro(
-            "Não foi possível conectar ao servidor. Tente novamente."
-        );
+        mostrarErro("Falha de comunicação com o servidor.");
+    } finally {
+        botao.disabled = false;
+        botao.textContent = "Entrar";
     }
 }
-
 
 function irParaCadastro() {
     window.location.href = "front-end-login.html";
