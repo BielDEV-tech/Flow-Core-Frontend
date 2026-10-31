@@ -92,3 +92,9 @@ async function login() {
 function irParaCadastro() {
     window.location.href = "front-end-login.html";
 }
+
+function irParaCadastro() {
+    window.location.assign(
+        "https://flow-core-frontend.vercel.app/front-end-cadastro.html"
+    );
+}
