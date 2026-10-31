@@ -23,6 +23,7 @@ function fecharErro() {
     clearTimeout(temporizadorErro);
 }
 
+
 async function login() {
     const cpf = document.querySelector("#cpf").value.trim();
     const senha = document.querySelector("#senha").value;
@@ -40,11 +41,9 @@ async function login() {
             "https://flow-core-api.onrender.com/login_usuario",
             {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json"
                 },
-
                 body: JSON.stringify({
                     nome: "",
                     senha: senha,
@@ -62,7 +61,6 @@ async function login() {
                     ? "CPF ou senha inválidos. Confira seus dados e tente novamente."
                     : (dados.detail || "Não foi possível realizar o login.")
             );
-
             return;
         }
 
@@ -75,26 +73,21 @@ async function login() {
             return;
         }
 
+        // Salvar token de autenticação
         localStorage.setItem("token", token);
 
-        const querAvaliar =
-            localStorage.getItem("avaliar");
-
-        if (querAvaliar === "true") {
-            window.location.href = "index.html";
-            return;
-        }
-
-        window.location.href = "index.html";
+        // Retornar automaticamente para o site
+        window.location.href = "./index.html";
 
     } catch (erro) {
-        console.error(erro);
+        console.error("Erro no login:", erro);
 
         mostrarErro(
             "Não foi possível conectar ao servidor. Tente novamente."
         );
     }
 }
+
 
 function irParaCadastro() {
     window.location.href = "front-end-login.html";
