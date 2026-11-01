@@ -48,10 +48,8 @@ async function login() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    nome: "",
-                    senha: senha,
-                    cpf: cpf,
-                    email: ""
+                    cpf: cpf.replace(/\D/g, ""),
+                    senha: senha
                 })
             }
         );
