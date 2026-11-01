@@ -48,13 +48,17 @@ async function login() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    cpf: cpf.replace(/\D/g, ""),
-                    senha: senha
-                })
+        nome: "",
+        senha: senha,
+        cpf: cpf.replace(/\D/g, ""),
+        email: ""
+    })
             }
         );
 
         const dados = await resposta.json();
+
+        console.log("Detalhes completos do erro:", dados.detail);
 
         if (!resposta.ok) {
             console.error("Erro retornado pela API:", dados);
