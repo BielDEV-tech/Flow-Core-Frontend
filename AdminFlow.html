@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Core | Administração</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="AdminFlow.css">
+</head>
+<body>
+
+    <div id="loginAdmin" class="login-overlay">
+        <form id="formLoginAdmin" class="login-card">
+            <div class="logo">FLOW <span>CORE</span></div>
+            <p>Painel administrativo</p>
+
+            <label>CPF</label>
+            <input id="cpfAdmin" type="text" placeholder="Digite seu CPF" required>
+
+            <label>Senha</label>
+            <input id="senhaAdmin" type="password" placeholder="Digite sua senha" required>
+
+            <button type="submit">Entrar no painel</button>
+            <small id="erroLogin"></small>
+        </form>
+    </div>
+
+    <div id="painelAdmin" class="layout" hidden>
+
+        <aside class="sidebar">
+            <div class="logo">FLOW <span>CORE</span></div>
+            <p class="sidebar-label">ADMINISTRAÇÃO</p>
+
+            <nav>
+                <button class="nav-item active" data-page="dashboard">⌂ Visão geral</button>
+                <button class="nav-item" data-page="clientes">♙ Clientes</button>
+                <button class="nav-item" data-page="produtos">▦ Produtos</button>
+                <button class="nav-item" data-page="compras">↗ Compras</button>
+                <button class="nav-item" data-page="assinaturas">◷ Assinaturas</button>
+                <button class="nav-item" data-page="pagamentos">$ Pagamentos</button>
+                <button class="nav-item" data-page="avaliacoes">☆ Avaliações</button>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <span id="adminNome">Administrador</span>
+                <button id="sairAdmin" class="logout">Sair da conta</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <span class="eyebrow">FLOW CORE / ADMIN</span>
+                    <h1 id="tituloPagina">Visão geral</h1>
+                </div>
+                <button id="atualizarDados" class="refresh-btn">↻ Atualizar dados</button>
+            </header>
+
+            <div id="mensagem" class="mensagem"></div>
+
+            <section class="page active" id="page-dashboard">
+                <div class="welcome">
+                    <div>
+                        <span class="eyebrow">CENTRAL DE CONTROLE</span>
+                        <h2>Bem-vindo à administração.</h2>
+                        <p>Acompanhe os principais dados da Flow Core.</p>
+                    </div>
+                    <div class="welcome-icon">FC</div>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <span>Clientes cadastrados</span>
+                        <strong id="totalClientes">0</strong>
+                        <small>Base de clientes</small>
+                    </article>
+                    <article class="stat-card">
+                        <span>Produtos disponíveis</span>
+                        <strong id="totalProdutos">0</strong>
+                        <small>Catálogo atual</small>
+                    </article>
+                    <article class="stat-card">
+                        <span>Compras registradas</span>
+                        <strong id="totalCompras">0</strong>
+                        <small>Histórico de compras</small>
+                    </article>
+                    <article class="stat-card">
+                        <span>Assinaturas</span>
+                        <strong id="totalAssinaturas">0</strong>
+                        <small>Registros de assinaturas</small>
+                    </article>
+                </div>
+
+                <div class="stats-grid secondary-stats">
+                    <article class="stat-card highlight">
+                        <span>Pagamentos aprovados</span>
+                        <strong id="totalRecebido">R$ 0,00</strong>
+                        <small>Soma dos pagamentos com status aprovado</small>
+                    </article>
+                    <article class="stat-card">
+                        <span>Pagamentos pendentes</span>
+                        <strong id="totalPendente">R$ 0,00</strong>
+                        <small>Valores aguardando confirmação</small>
+                    </article>
+                    <article class="stat-card">
+                        <span>Avaliações</span>
+                        <strong id="totalAvaliacoes">0</strong>
+                        <small>Opiniões cadastradas</small>
+                    </article>
+                </div>
+
+                <div class="content-grid">
+                    <article class="panel">
+                        <div class="panel-heading">
+                            <div>
+                                <span class="eyebrow">FINANCEIRO</span>
+                                <h3>Pagamentos por status</h3>
+                            </div>
+                        </div>
+                        <div id="graficoStatus" class="chart-list"></div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-heading">
+                            <div>
+                                <span class="eyebrow">ATIVIDADE</span>
+                                <h3>Últimas compras</h3>
+                            </div>
+                        </div>
+                        <div id="ultimasCompras" class="recent-list"></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="page" id="page-clientes">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="eyebrow">BASE DE USUÁRIOS</span>
+                            <h3>Clientes cadastrados</h3>
+                        </div>
+                        <input class="search" id="buscaClientes" placeholder="Buscar cliente...">
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Nome</th><th>CPF</th><th>E-mail</th></tr>
+                            </thead>
+                            <tbody id="tabelaClientes"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page" id="page-produtos">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="eyebrow">CATÁLOGO</span>
+                            <h3>Produtos da Flow Core</h3>
+                        </div>
+                        <input class="search" id="buscaProdutos" placeholder="Buscar produto...">
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Produto</th><th>Preço</th><th>Mensalidade</th><th>Tipo</th><th>Ação</th></tr>
+                            </thead>
+                            <tbody id="tabelaProdutos"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page" id="page-compras">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="eyebrow">HISTÓRICO COMERCIAL</span>
+                            <h3>Compras registradas</h3>
+                        </div>
+                        <input class="search" id="buscaCompras" placeholder="Buscar compra...">
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Cliente</th><th>Produto</th><th>Valor</th><th>Tipo</th><th>Status</th><th>Data</th></tr>
+                            </thead>
+                            <tbody id="tabelaCompras"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page" id="page-assinaturas">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="eyebrow">RECEITA RECORRENTE</span>
+                            <h3>Assinaturas</h3>
+                        </div>
+                        <input class="search" id="buscaAssinaturas" placeholder="Buscar assinatura...">
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Cliente</th><th>Produto</th><th>Valor mensal</th><th>Status</th><th>Início</th><th>Próxima cobrança</th></tr>
+                            </thead>
+                            <tbody id="tabelaAssinaturas"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page" id="page-pagamentos">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="eyebrow">CONTROLE FINANCEIRO</span>
+                            <h3>Histórico de pagamentos</h3>
+                        </div>
+                        <input class="search" id="buscaPagamentos" placeholder="Buscar pagamento...">
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Cliente</th><th>Valor</th><th>Método</th><th>Tipo</th><th>Status</th><th>Data</th></tr>
+                            </thead>
+                            <tbody id="tabelaPagamentos"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page" id="page-avaliacoes">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="eyebrow">FEEDBACK</span>
+                            <h3>Avaliações dos clientes</h3>
+                        </div>
+                        <input class="search" id="buscaAvaliacoes" placeholder="Buscar avaliação...">
+                    </div>
+                    <div id="listaAvaliacoes" class="reviews-list"></div>
+                </div>
+            </section>
+
+            <footer>Flow Core · Painel administrativo</footer>
+        </main>
+    </div>
+
+    <script src="AdminFlow.js"></script>
+</body>
+</html>
