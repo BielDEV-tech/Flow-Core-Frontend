@@ -1271,3 +1271,159 @@ body:has(.cadastro-container) {
         font-size: 12px;
     }
 }
+
+
+/* =====================================
+   FORMULÁRIO DE AVALIAÇÃO - FLOW CORE
+===================================== */
+
+/* Área do formulário */
+.nova-avaliacao {
+    width: 100%;
+    max-width: 650px;
+    margin: 35px auto;
+    padding: 30px;
+    border-radius: 20px;
+
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Textos */
+.nova-avaliacao h2 {
+    color: #F1F5F9;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.nova-avaliacao p {
+    color: #94A3B8;
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+/* Campos de texto */
+.nova-avaliacao input,
+.nova-avaliacao textarea {
+    width: 100%;
+    padding: 15px 17px;
+    margin: 10px 0;
+
+    color: #F1F5F9;
+    font-size: 16px;
+    font-family: inherit;
+
+    background: #020617;
+    border: 1px solid #334155;
+    border-radius: 12px;
+
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.nova-avaliacao input:focus,
+.nova-avaliacao textarea:focus {
+    border-color: #8B5CF6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+.nova-avaliacao textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.nova-avaliacao input::placeholder,
+.nova-avaliacao textarea::placeholder {
+    color: #64748B;
+}
+
+/* Seleção de nota */
+.nova-avaliacao select {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+
+    color: #F1F5F9;
+    background: #020617;
+
+    border: 1px solid #334155;
+    border-radius: 12px;
+
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+
+.nova-avaliacao select:focus {
+    border-color: #8B5CF6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+/* Estrelas, caso sejam criadas com elementos individuais */
+.nova-avaliacao .estrela,
+.nova-avaliacao .estrelas label {
+    color: #F59E0B;
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.nova-avaliacao .estrela:hover,
+.nova-avaliacao .estrelas label:hover {
+    transform: scale(1.15);
+}
+
+/* Botão de envio */
+.nova-avaliacao button {
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 15px;
+
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+
+    background: linear-gradient(
+        110deg,
+        #8B5CF6,
+        #3B82F6
+    );
+
+    box-shadow: 0 7px 20px rgba(139, 92, 246, 0.2);
+
+    transition: 0.25s ease;
+}
+
+.nova-avaliacao button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(139, 92, 246, 0.35);
+    filter: brightness(1.1);
+}
+
+.nova-avaliacao button:active {
+    transform: scale(0.98);
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .nova-avaliacao {
+        padding: 22px 16px;
+    }
+
+    .nova-avaliacao h2 {
+        font-size: 22px;
+    }
+
+    .nova-avaliacao input,
+    .nova-avaliacao textarea,
+    .nova-avaliacao select {
+        font-size: 16px;
+    }
+}
