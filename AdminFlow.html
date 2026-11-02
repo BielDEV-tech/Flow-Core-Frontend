@@ -15,10 +15,10 @@
             <div class="logo">FLOW <span>CORE</span></div>
             <p>Painel administrativo</p>
 
-            <label>CPF</label>
+            <label for="cpfAdmin">CPF</label>
             <input id="cpfAdmin" type="text" placeholder="Digite seu CPF" required>
 
-            <label>Senha</label>
+            <label for="senhaAdmin">Senha</label>
             <input id="senhaAdmin" type="password" placeholder="Digite sua senha" required>
 
             <button type="submit">Entrar no painel</button>
@@ -49,17 +49,29 @@
         </aside>
 
         <main class="main">
+
             <header class="topbar">
                 <div>
                     <span class="eyebrow">FLOW CORE / ADMIN</span>
                     <h1 id="tituloPagina">Visão geral</h1>
                 </div>
-                <button id="atualizarDados" class="refresh-btn">↻ Atualizar dados</button>
+
+                <div class="topbar-right">
+                    <div class="admin-info-top">
+                        <span class="admin-date" id="dataAtual">Carregando data...</span>
+                        <strong id="nomeAdminTopo">Administrador</strong>
+                    </div>
+
+                    <button id="atualizarDados" class="refresh-btn">
+                        ↻ Atualizar dados
+                    </button>
+                </div>
             </header>
 
             <div id="mensagem" class="mensagem"></div>
 
             <section class="page active" id="page-dashboard">
+
                 <div class="welcome">
                     <div>
                         <span class="eyebrow">CENTRAL DE CONTROLE</span>
@@ -70,47 +82,57 @@
                 </div>
 
                 <div class="stats-grid">
+
                     <article class="stat-card">
                         <span>Clientes cadastrados</span>
                         <strong id="totalClientes">0</strong>
                         <small>Base de clientes</small>
                     </article>
+
                     <article class="stat-card">
                         <span>Produtos disponíveis</span>
                         <strong id="totalProdutos">0</strong>
                         <small>Catálogo atual</small>
                     </article>
+
                     <article class="stat-card">
                         <span>Compras registradas</span>
                         <strong id="totalCompras">0</strong>
                         <small>Histórico de compras</small>
                     </article>
+
                     <article class="stat-card">
                         <span>Assinaturas</span>
                         <strong id="totalAssinaturas">0</strong>
                         <small>Registros de assinaturas</small>
                     </article>
+
                 </div>
 
                 <div class="stats-grid secondary-stats">
+
                     <article class="stat-card highlight">
                         <span>Pagamentos aprovados</span>
                         <strong id="totalRecebido">R$ 0,00</strong>
-                        <small>Soma dos pagamentos com status aprovado</small>
+                        <small>Soma dos pagamentos aprovados</small>
                     </article>
+
                     <article class="stat-card">
                         <span>Pagamentos pendentes</span>
                         <strong id="totalPendente">R$ 0,00</strong>
                         <small>Valores aguardando confirmação</small>
                     </article>
+
                     <article class="stat-card">
                         <span>Avaliações</span>
                         <strong id="totalAvaliacoes">0</strong>
                         <small>Opiniões cadastradas</small>
                     </article>
+
                 </div>
 
                 <div class="content-grid">
+
                     <article class="panel">
                         <div class="panel-heading">
                             <div>
@@ -118,6 +140,7 @@
                                 <h3>Pagamentos por status</h3>
                             </div>
                         </div>
+
                         <div id="graficoStatus" class="chart-list"></div>
                     </article>
 
@@ -128,8 +151,10 @@
                                 <h3>Últimas compras</h3>
                             </div>
                         </div>
+
                         <div id="ultimasCompras" class="recent-list"></div>
                     </article>
+
                 </div>
             </section>
 
@@ -140,12 +165,19 @@
                             <span class="eyebrow">BASE DE USUÁRIOS</span>
                             <h3>Clientes cadastrados</h3>
                         </div>
+
                         <input class="search" id="buscaClientes" placeholder="Buscar cliente...">
                     </div>
+
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>ID</th><th>Nome</th><th>CPF</th><th>E-mail</th></tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>E-mail</th>
+                                </tr>
                             </thead>
                             <tbody id="tabelaClientes"></tbody>
                         </table>
@@ -160,12 +192,21 @@
                             <span class="eyebrow">CATÁLOGO</span>
                             <h3>Produtos da Flow Core</h3>
                         </div>
+
                         <input class="search" id="buscaProdutos" placeholder="Buscar produto...">
                     </div>
+
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>ID</th><th>Produto</th><th>Preço</th><th>Mensalidade</th><th>Tipo</th><th>Ação</th></tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Produto</th>
+                                    <th>Preço</th>
+                                    <th>Mensalidade</th>
+                                    <th>Tipo</th>
+                                    <th>Ação</th>
+                                </tr>
                             </thead>
                             <tbody id="tabelaProdutos"></tbody>
                         </table>
@@ -180,12 +221,22 @@
                             <span class="eyebrow">HISTÓRICO COMERCIAL</span>
                             <h3>Compras registradas</h3>
                         </div>
+
                         <input class="search" id="buscaCompras" placeholder="Buscar compra...">
                     </div>
+
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>ID</th><th>Cliente</th><th>Produto</th><th>Valor</th><th>Tipo</th><th>Status</th><th>Data</th></tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Produto</th>
+                                    <th>Valor</th>
+                                    <th>Tipo</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                </tr>
                             </thead>
                             <tbody id="tabelaCompras"></tbody>
                         </table>
@@ -200,12 +251,22 @@
                             <span class="eyebrow">RECEITA RECORRENTE</span>
                             <h3>Assinaturas</h3>
                         </div>
+
                         <input class="search" id="buscaAssinaturas" placeholder="Buscar assinatura...">
                     </div>
+
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>ID</th><th>Cliente</th><th>Produto</th><th>Valor mensal</th><th>Status</th><th>Início</th><th>Próxima cobrança</th></tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Produto</th>
+                                    <th>Valor mensal</th>
+                                    <th>Status</th>
+                                    <th>Início</th>
+                                    <th>Próxima cobrança</th>
+                                </tr>
                             </thead>
                             <tbody id="tabelaAssinaturas"></tbody>
                         </table>
@@ -220,12 +281,22 @@
                             <span class="eyebrow">CONTROLE FINANCEIRO</span>
                             <h3>Histórico de pagamentos</h3>
                         </div>
+
                         <input class="search" id="buscaPagamentos" placeholder="Buscar pagamento...">
                     </div>
+
                     <div class="table-wrap">
                         <table>
                             <thead>
-                                <tr><th>ID</th><th>Cliente</th><th>Valor</th><th>Método</th><th>Tipo</th><th>Status</th><th>Data</th></tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Valor</th>
+                                    <th>Método</th>
+                                    <th>Tipo</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                </tr>
                             </thead>
                             <tbody id="tabelaPagamentos"></tbody>
                         </table>
@@ -240,13 +311,16 @@
                             <span class="eyebrow">FEEDBACK</span>
                             <h3>Avaliações dos clientes</h3>
                         </div>
+
                         <input class="search" id="buscaAvaliacoes" placeholder="Buscar avaliação...">
                     </div>
+
                     <div id="listaAvaliacoes" class="reviews-list"></div>
                 </div>
             </section>
 
             <footer>Flow Core · Painel administrativo</footer>
+
         </main>
     </div>
 

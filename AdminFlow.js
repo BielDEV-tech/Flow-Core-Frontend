@@ -2,6 +2,7 @@
 const API = "https://flow-core-api.onrender.com";
 
 let token = localStorage.getItem("tokenAdminFlow");
+
 let dados = {
     clientes: [],
     produtos: [],
@@ -12,6 +13,10 @@ let dados = {
 };
 
 const $ = (id) => document.getElementById(id);
+
+let temporizadorMensagem = null;
+
+// UTILITÁRIOS
 
 function escapar(valor) {
     return String(valor ?? "").replace(/[&<>"']/g, caractere => ({
@@ -40,6 +45,17 @@ function dataFormatada(valor) {
     return data.toLocaleDateString("pt-BR");
 }
 
+function atualizarDataAtual() {
+    const agora = new Date();
+
+    $("dataAtual").textContent = agora.toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    });
+}
+
 function statusHTML(status) {
     const texto = String(status || "indefinido").toLowerCase();
     const classe = texto.replace(/[^a-z0-9_-]/g, "");
@@ -53,8 +69,14 @@ function mensagem(texto) {
     elemento.textContent = texto;
     elemento.classList.add("show");
 
-    setTimeout(() => elemento.classList.remove("show"), 5000);
+    clearTimeout(temporizadorMensagem);
+
+    temporizadorMensagem = setTimeout(() => {
+        elemento.classList.remove("show");
+    }, 5000);
 }
+
+// REQUISIÇÕES À API
 
 async function requisicao(endpoint, opcoes = {}) {
     const resposta = await fetch(`${API}${endpoint}`, {
@@ -76,6 +98,7 @@ async function requisicao(endpoint, opcoes = {}) {
     }
 
     const texto = await resposta.text();
+
     let resultado = {};
 
     try {
@@ -101,13 +124,16 @@ $("formLoginAdmin").addEventListener("submit", async (evento) => {
     const senha = $("senhaAdmin").value;
 
     $("erroLogin").textContent = "";
+
     botao.disabled = true;
     botao.textContent = "Verificando...";
 
     try {
         const resposta = await fetch(`${API}/login`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({ cpf, senha })
         });
 
@@ -135,12 +161,21 @@ $("formLoginAdmin").addEventListener("submit", async (evento) => {
     }
 });
 
+// SAIR
+
 function sair() {
     localStorage.removeItem("tokenAdminFlow");
+
     token = null;
 
     $("painelAdmin").hidden = true;
     $("loginAdmin").hidden = false;
+
+    $("cpfAdmin").value = "";
+    $("senhaAdmin").value = "";
+
+    $("nomeAdminTopo").textContent = "Administrador";
+    $("adminNome").textContent = "Administrador";
 }
 
 // INICIAR E VALIDAR ACESSO
@@ -153,10 +188,15 @@ async function iniciarPainel() {
     }
 
     try {
-        // Essa rota valida se o token pertence a um administrador.
+        // Valida se o token pertence a um administrador.
         const administrador = await requisicao("/funcionario_empregado");
 
-        $("adminNome").textContent = administrador.nome || "Administrador";
+        const nomeAdministrador = administrador.nome || "Administrador";
+
+        $("adminNome").textContent = nomeAdministrador;
+        $("nomeAdminTopo").textContent = nomeAdministrador;
+
+        atualizarDataAtual();
 
         $("loginAdmin").hidden = true;
         $("painelAdmin").hidden = false;
@@ -168,7 +208,10 @@ async function iniciarPainel() {
             mensagem(erro.message);
         }
 
-        if (erro.message.includes("administrador")) {
+        if (
+            erro.message.includes("administrador") ||
+            erro.message.includes("Sessão expirada")
+        ) {
             sair();
         }
     }
@@ -195,6 +238,7 @@ async function carregarDados() {
         dados.avaliacoes = resultados[5];
 
         atualizarPainel();
+
     } catch (erro) {
         mensagem("Não foi possível carregar todos os dados: " + erro.message);
         throw erro;
@@ -241,11 +285,14 @@ function atualizarPainel() {
     renderizarAvaliacoes();
 }
 
+// GRÁFICO
+
 function renderizarGrafico() {
     const status = {};
 
     dados.pagamentos.forEach(pagamento => {
         const nome = pagamento.status || "indefinido";
+
         status[nome] = (status[nome] || 0) + Number(pagamento.valor || 0);
     });
 
@@ -259,6 +306,7 @@ function renderizarGrafico() {
                     <span>${escapar(nome)}</span>
                     <strong>${dinheiro(valor)}</strong>
                 </div>
+
                 <div class="bar-bg">
                     <div class="bar" style="width:${valor / maior * 100}%"></div>
                 </div>
@@ -266,6 +314,8 @@ function renderizarGrafico() {
         `).join("")
         : '<div class="empty">Nenhum pagamento registrado.</div>';
 }
+
+// ÚLTIMAS COMPRAS
 
 function renderizarUltimasCompras() {
     const recentes = [...dados.compras]
@@ -277,18 +327,21 @@ function renderizarUltimasCompras() {
             <div class="recent-item">
                 <div>
                     <strong>${escapar(compra.cliente)}</strong>
-                    <br><span>${escapar(compra.produto)}</span>
+                    <br>
+                    <span>${escapar(compra.produto)}</span>
                 </div>
+
                 <div>
                     <strong>${dinheiro(compra.valor)}</strong>
-                    <br><span>${escapar(compra.status)}</span>
+                    <br>
+                    <span>${escapar(compra.status)}</span>
                 </div>
             </div>
         `).join("")
         : '<div class="empty">Nenhuma compra registrada.</div>';
 }
 
-// TABELAS
+// TABELA DE CLIENTES
 
 function renderizarClientes(lista = dados.clientes) {
     $("tabelaClientes").innerHTML = lista.length
@@ -302,6 +355,8 @@ function renderizarClientes(lista = dados.clientes) {
         `).join("")
         : '<tr><td colspan="4" class="empty">Nenhum cliente encontrado.</td></tr>';
 }
+
+// TABELA DE PRODUTOS
 
 function renderizarProdutos(lista = dados.produtos) {
     $("tabelaProdutos").innerHTML = lista.length
@@ -322,6 +377,8 @@ function renderizarProdutos(lista = dados.produtos) {
         : '<tr><td colspan="6" class="empty">Nenhum produto encontrado.</td></tr>';
 }
 
+// TABELA DE COMPRAS
+
 function renderizarCompras(lista = dados.compras) {
     $("tabelaCompras").innerHTML = lista.length
         ? lista.map(c => `
@@ -337,6 +394,8 @@ function renderizarCompras(lista = dados.compras) {
         `).join("")
         : '<tr><td colspan="7" class="empty">Nenhuma compra encontrada.</td></tr>';
 }
+
+// TABELA DE ASSINATURAS
 
 function renderizarAssinaturas(lista = dados.assinaturas) {
     $("tabelaAssinaturas").innerHTML = lista.length
@@ -354,6 +413,8 @@ function renderizarAssinaturas(lista = dados.assinaturas) {
         : '<tr><td colspan="7" class="empty">Nenhuma assinatura encontrada.</td></tr>';
 }
 
+// TABELA DE PAGAMENTOS
+
 function renderizarPagamentos(lista = dados.pagamentos) {
     $("tabelaPagamentos").innerHTML = lista.length
         ? lista.map(p => `
@@ -370,18 +431,29 @@ function renderizarPagamentos(lista = dados.pagamentos) {
         : '<tr><td colspan="7" class="empty">Nenhum pagamento encontrado.</td></tr>';
 }
 
+// AVALIAÇÕES
+
 function renderizarAvaliacoes(lista = dados.avaliacoes) {
     $("listaAvaliacoes").innerHTML = lista.length
-        ? lista.map(a => `
-            <article class="review-card">
-                <h4>${escapar(a.nome)}</h4>
-                <div class="review-stars">${"★".repeat(Math.max(0, Math.min(5, Number(a.nota) || 0)))}${"☆".repeat(5 - Math.max(0, Math.min(5, Number(a.nota) || 0)))}</div>
-                <p>${escapar(a.comentario)}</p>
-                <button class="delete-btn" data-excluir-avaliacao="${escapar(a.id)}">
-                    Excluir avaliação
-                </button>
-            </article>
-        `).join("")
+        ? lista.map(a => {
+            const nota = Math.max(0, Math.min(5, Number(a.nota) || 0));
+
+            return `
+                <article class="review-card">
+                    <h4>${escapar(a.nome)}</h4>
+
+                    <div class="review-stars">
+                        ${"★".repeat(nota)}${"☆".repeat(5 - nota)}
+                    </div>
+
+                    <p>${escapar(a.comentario)}</p>
+
+                    <button class="delete-btn" data-excluir-avaliacao="${escapar(a.id)}">
+                        Excluir avaliação
+                    </button>
+                </article>
+            `;
+        }).join("")
         : '<div class="empty">Nenhuma avaliação encontrada.</div>';
 }
 
@@ -399,13 +471,13 @@ const titulos = {
 
 document.querySelectorAll(".nav-item").forEach(botao => {
     botao.addEventListener("click", () => {
-        document.querySelectorAll(".nav-item").forEach(item =>
-            item.classList.remove("active")
-        );
+        document.querySelectorAll(".nav-item").forEach(item => {
+            item.classList.remove("active");
+        });
 
-        document.querySelectorAll(".page").forEach(pagina =>
-            pagina.classList.remove("active")
-        );
+        document.querySelectorAll(".page").forEach(pagina => {
+            pagina.classList.remove("active");
+        });
 
         botao.classList.add("active");
 
@@ -416,13 +488,16 @@ document.querySelectorAll(".nav-item").forEach(botao => {
     });
 });
 
-// BUSCAS
+// BUSCAS CORRIGIDAS
 
-function configurarBusca(inputId, dadosLista, campo, renderizar) {
+function configurarBusca(inputId, nomeLista, campo, renderizar) {
     $(inputId).addEventListener("input", evento => {
-        const termo = evento.target.value.toLowerCase();
+        const termo = evento.target.value.toLowerCase().trim();
 
-        const filtrados = dadosLista.filter(item =>
+        // Busca sempre nos dados mais recentes.
+        const listaAtual = dados[nomeLista];
+
+        const filtrados = listaAtual.filter(item =>
             String(item[campo] ?? "").toLowerCase().includes(termo)
         );
 
@@ -430,26 +505,35 @@ function configurarBusca(inputId, dadosLista, campo, renderizar) {
     });
 }
 
-configurarBusca("buscaClientes", dados.clientes, "nome", renderizarClientes);
-configurarBusca("buscaProdutos", dados.produtos, "nome", renderizarProdutos);
-configurarBusca("buscaCompras", dados.compras, "cliente", renderizarCompras);
-configurarBusca("buscaAssinaturas", dados.assinaturas, "cliente", renderizarAssinaturas);
-configurarBusca("buscaPagamentos", dados.pagamentos, "cliente", renderizarPagamentos);
-configurarBusca("buscaAvaliacoes", dados.avaliacoes, "nome", renderizarAvaliacoes);
+configurarBusca("buscaClientes", "clientes", "nome", renderizarClientes);
+configurarBusca("buscaProdutos", "produtos", "nome", renderizarProdutos);
+configurarBusca("buscaCompras", "compras", "cliente", renderizarCompras);
+configurarBusca("buscaAssinaturas", "assinaturas", "cliente", renderizarAssinaturas);
+configurarBusca("buscaPagamentos", "pagamentos", "cliente", renderizarPagamentos);
+configurarBusca("buscaAvaliacoes", "avaliacoes", "nome", renderizarAvaliacoes);
 
 // EXCLUSÕES
 
 document.addEventListener("click", async evento => {
-    const produtoId = evento.target.dataset.excluirProduto;
-    const avaliacaoId = evento.target.dataset.excluirAvaliacao;
+    const alvo = evento.target.closest("button");
+
+    if (!alvo) return;
+
+    const produtoId = alvo.dataset.excluirProduto;
+    const avaliacaoId = alvo.dataset.excluirAvaliacao;
 
     if (produtoId) {
         if (!confirm("Deseja realmente excluir este produto?")) return;
 
         try {
-            await requisicao(`/produtos/${produtoId}`, { method: "DELETE" });
+            await requisicao(`/produtos/${produtoId}`, {
+                method: "DELETE"
+            });
+
             mensagem("Produto excluído com sucesso.");
+
             await carregarDados();
+
         } catch (erro) {
             mensagem(erro.message);
         }
@@ -459,16 +543,21 @@ document.addEventListener("click", async evento => {
         if (!confirm("Deseja realmente excluir esta avaliação?")) return;
 
         try {
-            await requisicao(`/avaliacoes/${avaliacaoId}`, { method: "DELETE" });
+            await requisicao(`/avaliacoes/${avaliacaoId}`, {
+                method: "DELETE"
+            });
+
             mensagem("Avaliação excluída com sucesso.");
+
             await carregarDados();
+
         } catch (erro) {
             mensagem(erro.message);
         }
     }
 });
 
-// ATUALIZAR E SAIR
+// ATUALIZAR DADOS
 
 $("atualizarDados").addEventListener("click", async () => {
     const botao = $("atualizarDados");
@@ -478,14 +567,19 @@ $("atualizarDados").addEventListener("click", async () => {
 
     try {
         await carregarDados();
+
         mensagem("Dados atualizados com sucesso.");
+
     } catch (erro) {
         mensagem(erro.message);
+
     } finally {
         botao.disabled = false;
         botao.textContent = "↻ Atualizar dados";
     }
 });
+
+// SAIR DA CONTA
 
 $("sairAdmin").addEventListener("click", sair);
 
