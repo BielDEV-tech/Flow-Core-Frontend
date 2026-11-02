@@ -512,6 +512,74 @@ configurarBusca("buscaAssinaturas", "assinaturas", "cliente", renderizarAssinatu
 configurarBusca("buscaPagamentos", "pagamentos", "cliente", renderizarPagamentos);
 configurarBusca("buscaAvaliacoes", "avaliacoes", "nome", renderizarAvaliacoes);
 
+// CADASTRAR PRODUTOS
+
+$("formCadastroProduto").addEventListener("submit", async evento => {
+    evento.preventDefault();
+
+    const botao = $("btnCadastrarProduto");
+    const erro = $("erroCadastroProduto");
+
+    erro.textContent = "";
+
+    const tipoVenda = $("produtoTipoVenda").value;
+    const preco = Number($("produtoPreco").value || 0);
+    const mensalidade = Number($("produtoMensalidade").value || 0);
+
+    if (tipoVenda === "avulso" && preco <= 0) {
+        erro.textContent = "Informe um preço avulso válido.";
+        return;
+    }
+
+    if (tipoVenda === "mensal" && mensalidade <= 0) {
+        erro.textContent = "Informe uma mensalidade válida.";
+        return;
+    }
+
+    if (
+        tipoVenda === "ambos" &&
+        preco <= 0 &&
+        mensalidade <= 0
+    ) {
+        erro.textContent = "Informe pelo menos um preço.";
+        return;
+    }
+
+    const produto = {
+        nome: $("produtoNome").value.trim(),
+        preco,
+        descrisao: $("produtoDescricao").value.trim(),
+        validade: $("produtoValidade").value.trim(),
+        incluso: $("produtoIncluso").value.trim(),
+        mensalidade,
+        video: $("produtoVideo").value.trim(),
+        tipo_venda: tipoVenda
+    };
+
+    botao.disabled = true;
+    botao.textContent = "Cadastrando...";
+
+    try {
+        await requisicao("/postar_produto", {
+            method: "POST",
+            body: JSON.stringify(produto)
+        });
+
+        mensagem("Produto cadastrado com sucesso!");
+
+        $("formCadastroProduto").reset();
+
+        await carregarDados();
+
+    } catch (erroRequisicao) {
+        erro.textContent = erroRequisicao.message;
+
+    } finally {
+        botao.disabled = false;
+        botao.textContent = "+ Cadastrar produto";
+    }
+});
+
 // EXCLUSÕES
 
 document.addEventListener("click", async evento => {

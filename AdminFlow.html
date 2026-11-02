@@ -186,6 +186,79 @@
             </section>
 
             <section class="page" id="page-produtos">
+                <div class="panel cadastro-produto">
+    <div class="panel-heading">
+        <div>
+            <span class="eyebrow">NOVO CADASTRO</span>
+            <h3>Cadastrar produto</h3>
+        </div>
+    </div>
+
+    <form id="formCadastroProduto">
+
+        <div class="form-grid">
+
+            <div class="campo-produto">
+                <label for="produtoNome">Nome do produto</label>
+                <input id="produtoNome" type="text"
+                    placeholder="Ex: Sistema de gestão" required>
+            </div>
+
+            <div class="campo-produto">
+                <label for="produtoPreco">Preço avulso (R$)</label>
+                <input id="produtoPreco" type="number"
+                    min="0" step="0.01" placeholder="0,00">
+            </div>
+
+            <div class="campo-produto">
+                <label for="produtoMensalidade">Mensalidade (R$)</label>
+                <input id="produtoMensalidade" type="number"
+                    min="0" step="0.01" placeholder="0,00">
+            </div>
+
+            <div class="campo-produto">
+                <label for="produtoTipoVenda">Tipo de venda</label>
+                <select id="produtoTipoVenda" required>
+                    <option value="ambos">Avulso e mensal</option>
+                    <option value="avulso">Somente avulso</option>
+                    <option value="mensal">Somente mensal</option>
+                </select>
+            </div>
+
+            <div class="campo-produto">
+                <label for="produtoValidade">Validade</label>
+                <input id="produtoValidade" type="text"
+                    placeholder="Ex: 30 dias">
+            </div>
+
+            <div class="campo-produto">
+                <label for="produtoVideo">Link do vídeo demonstrativo</label>
+                <input id="produtoVideo" type="url"
+                    placeholder="https://...">
+            </div>
+
+            <div class="campo-produto campo-completo">
+                <label for="produtoDescricao">Descrição</label>
+                <textarea id="produtoDescricao"
+                    placeholder="Descreva o produto..." required></textarea>
+            </div>
+
+            <div class="campo-produto campo-completo">
+                <label for="produtoIncluso">O que está incluso?</label>
+                <textarea id="produtoIncluso"
+                    placeholder="Informe o que o cliente receberá..."></textarea>
+            </div>
+
+        </div>
+
+        <button type="submit" id="btnCadastrarProduto">
+            + Cadastrar produto
+        </button>
+
+        <p id="erroCadastroProduto"></p>
+
+    </form>
+</div>
                 <div class="panel">
                     <div class="panel-heading">
                         <div>
