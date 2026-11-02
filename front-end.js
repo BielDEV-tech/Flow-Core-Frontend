@@ -401,7 +401,7 @@ function irParaAvaliacao() {
 
 
         window.location.href =
-            "login.html"
+            "./front-end-login.html"
 
 
         return
