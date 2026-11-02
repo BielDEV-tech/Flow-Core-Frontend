@@ -1,4 +1,4 @@
-const API_URL = "https://flow-core-s5ik.onrender.com;"
+const API_URL = "https://flow-core-api.onrender.com"
 
 
 // ======================================
